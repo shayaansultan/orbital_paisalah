@@ -36,23 +36,38 @@ class HomePage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            TextButton(
+            OutlinedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromARGB(255, 24, 51, 81)),
+                minimumSize: MaterialStateProperty.all<Size>(Size(100, 40)),
+                side: MaterialStateProperty.all<BorderSide>(
+                    BorderSide(color: Colors.white)),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
-              child: Text('Login'),
+              child: const Text('Login', style: TextStyle(color: Colors.white)),
             ),
-            TextButton(
+            OutlinedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color.fromARGB(255, 24, 51, 81)),
+                minimumSize: MaterialStateProperty.all<Size>(Size(100, 40)),
+                side: MaterialStateProperty.all<BorderSide>(
+                    const BorderSide(color: Colors.white)),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => RegisterPage()),
                 );
               },
-              child: Text('Register'),
+              child:
+                  const Text('Register', style: TextStyle(color: Colors.white)),
             ),
           ],
         ),
