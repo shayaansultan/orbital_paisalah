@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "847580617286",
+    "project_id": "paisalah-orbital",
+    "storage_bucket": "paisalah-orbital.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:847580617286:android:80fe3c1d4a6a9257b50847",
+        "android_client_info": {
+          "package_name": "com.example.orbital_paisalah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "847580617286-4s8dt8kkk03ias813u1rkbghfk8p5i6k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHChIt-d_ix9F2CgVNlJzczgMLHetuMEo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "847580617286-4s8dt8kkk03ias813u1rkbghfk8p5i6k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "847580617286-lnkr5j8sjlfvma39l0g2upmt3p22d718.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.orbitalPaisalah"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
