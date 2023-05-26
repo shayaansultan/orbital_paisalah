@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'main_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -75,8 +76,13 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () =>
-                    signIn(_emailController.text, _passwordController.text),
+                onPressed: () {
+                  signIn(_emailController.text, _passwordController.text);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainPage()),
+                  );
+                },
                 child: const Text("Login"),
               ),
             ),
