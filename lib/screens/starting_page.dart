@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'register_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'main_page.dart';
 
-class HomePage extends StatelessWidget {
+class StartingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,11 +49,21 @@ class HomePage extends StatelessWidget {
                     side: MaterialStateProperty.all<BorderSide>(
                         const BorderSide(color: Colors.white)),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                    );
+                  onPressed: () async {
+                    User? user = FirebaseAuth.instance.currentUser;
+                    if (user != null) {
+                      // User is logged in, navigate to main page
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => MainPage()),
+                      );
+                    } else {
+                      // User is not logged in, navigate to login page
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    }
                   },
                   child: const Text('Login',
                       style: TextStyle(color: Colors.white)),
