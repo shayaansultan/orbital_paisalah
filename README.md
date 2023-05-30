@@ -47,7 +47,7 @@ To run your Flutter app on an Android emulator, you need to set up an emulator u
 
 To run your Flutter app through an emulator using Visual Studio Code (VSCode), follow the steps below:
 
-1. Open your project in VSCode.
+1. Open your project in VSCode. (Install the Flutter extension if you haven't done so already)
 
 2. Open the terminal in VSCode by navigating to `View -> Terminal`.
 
