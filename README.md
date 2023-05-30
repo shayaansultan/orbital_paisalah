@@ -29,17 +29,17 @@ Follow the steps below to set up Flutter on your device:
 
 To run your Flutter app on an Android emulator, you need to set up an emulator using Android Studio. Follow these steps:
 
-1. Open Android Studio and click on the "Configure" button.
+1. Open Android Studio and click on the "Tools" button.
 
-2. Select "AVD Manager" from the dropdown menu.
+2. Select "Device Manager" from the dropdown menu.
 
-3. Click on the "Create Virtual Device" button.
+3. Click on the "Create Device" button.
 
-4. Follow the instructions to select and download an Android system image for the emulator.
+4. Configure the emulator settings such as device name, screen size, and orientation.
 
-5. Once the system image is downloaded, click on the "Next" button.
+5. Follow the instructions to select and download an Android system image for the emulator.
 
-6. Configure the emulator settings such as device name, screen size, and orientation.
+6. Once the system image is downloaded, click on the "Next" button.
 
 7. Click on the "Finish" button to create the emulator.
 
