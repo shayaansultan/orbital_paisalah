@@ -62,5 +62,7 @@ This command will build the app and start it on the emulator you set up earlier.
 
 6. Wait for the app to build and launch on the emulator.
 
+If you are still facing issues with the step, follow the guide on [GeeksForGeeks](https://www.geeksforgeeks.org/how-to-run-a-flutter-app-on-android-emulator/)
+
 ## Note
 This app is still in the development stage and features are yet to be implemented and thoroughly tested. You may encounter some bugs which you can try avoid by re-running  the app. 
