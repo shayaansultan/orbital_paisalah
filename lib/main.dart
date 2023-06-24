@@ -123,15 +123,7 @@ import 'screens/main_page.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      // options: const FirebaseOptions(
-      //     appId: '1:847580617286:android:80fe3c1d4a6a9257b50847',
-      //     apiKey: 'AIzaSyDHChIt-d_ix9F2CgVNlJzczgMLHetuMEo',
-      //     projectId: 'paisalah-orbital',
-      //     messagingSenderId: '847580617286',
-      //     databaseURL:
-      //         'https://paisalah-orbital-default-rtdb.asia-southeast1.firebasedatabase.app')
-      );
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
