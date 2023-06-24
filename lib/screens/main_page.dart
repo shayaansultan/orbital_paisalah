@@ -5,6 +5,7 @@ import 'package:orbital_paisalah/screens/transaction_item_tile.dart';
 import 'login_page.dart';
 import 'income_expense_card.dart';
 import 'SetBalancePage.dart';
+import 'NewTransactionPage.dart';
 
 class MainPage extends StatelessWidget {
   @override
@@ -73,6 +74,15 @@ class MainPage extends StatelessWidget {
                 );
               },
               child: Text('Set Balance'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NewTransactionPage()),
+                );
+              },
+              child: Text('New Transaction'),
             ),
           ],
         ),
