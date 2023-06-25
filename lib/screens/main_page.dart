@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:orbital_paisalah/cards/CurrentBalanceCard.dart';
+import 'package:orbital_paisalah/screens/CurrentBalanceCard.dart';
 import 'package:orbital_paisalah/screens/RecentTransactionsCard.dart';
 import 'package:orbital_paisalah/screens/starting_page.dart';
 import 'package:firebase_database/firebase_database.dart';
