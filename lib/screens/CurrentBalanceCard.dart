@@ -45,7 +45,12 @@ class _CurrentBalanceCardState extends State<CurrentBalanceCard> {
                 color: Colors.blue,
               ),
             ),
-            SizedBox(height: 8.0),
+            // SizedBox(height: 8.0),
+            Divider(
+              color: Colors.white,
+              thickness: 1,
+            ),
+
             StreamBuilder<DatabaseEvent>(
               stream: db.child('users/${user!.uid}/balance').onValue,
               builder: (context, snapshot) {
