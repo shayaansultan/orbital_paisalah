@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'main_page.dart';
+import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,21 +16,33 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
-  Future signIn(email, password) async {
-    await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
+  bool _isSuccess = false;
+  String _errorMessage = '';
+
+  Future<String> signIn(email, password) async {
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      return 'Success';
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      return e.message!;
+    }
+
+    // await FirebaseAuth.instance
+    //     .signInWithEmailAndPassword(email: email, password: password);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 24, 51, 81),
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 24, 51, 81),
-          shadowColor: Colors.transparent,
-        ),
+        // appBar: AppBar(
+        //   backgroundColor: Color.fromARGB(255, 24, 51, 81),
+        //   shadowColor: Colors.transparent,
+        // ),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 40.0),
+          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 160.0),
           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
             Title(
                 color: Colors.white,
@@ -76,17 +91,68 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  signIn(_emailController.text, _passwordController.text);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainPage()),
-                  );
+                onPressed: () async {
+                  _errorMessage = await signIn(
+                      _emailController.text, _passwordController.text);
+                  if (_errorMessage == 'Success') {
+                    _isSuccess = true;
+                  } else {
+                    _isSuccess = false;
+                  }
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => MainPage()),
+                  // );
+                  _showDialog();
                 },
                 child: const Text("Login"),
               ),
             ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                );
+              },
+              child: Text(
+                "Don't have an account? Create one!",
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 16.0,
+                ),
+              ),
+            ),
           ]),
         ));
+  }
+
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(_isSuccess ? 'Success' : 'Error'),
+          content: Text(_isSuccess
+              ? 'Login was successful.'
+              : 'Failed to login.\n\n$_errorMessage'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                if (_isSuccess) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainPage()),
+                  );
+                } else {
+                  Navigator.pop(context);
+                }
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
