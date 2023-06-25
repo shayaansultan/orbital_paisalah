@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:orbital_paisalah/others/TransactionCustom.dart';
 import 'TransactionCard.dart';
 import '../screens/NewTransactionPage.dart';
+import 'package:orbital_paisalah/screens/transactions_page.dart';
 
 class RecentTransactionsCard extends StatelessWidget {
   final db = FirebaseDatabase.instance.ref();
@@ -116,7 +117,7 @@ class RecentTransactionsCard extends StatelessWidget {
                   } catch (e) {
                     return Container(
                         alignment: Alignment.center,
-                        child: Text(
+                        child: const Text(
                           'No Transactions Available',
                           style: TextStyle(
                             color: Colors.white,
@@ -151,7 +152,11 @@ class RecentTransactionsCard extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                   child: ElevatedButton(
                     onPressed: () {
-                      // Navigate to All Transactions page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const TransactionsPage()),
+                      );
                     },
                     child: const Text('All Transactions'),
                   )),
