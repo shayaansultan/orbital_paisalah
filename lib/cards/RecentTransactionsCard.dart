@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'TransactionCustom.dart';
+import 'package:orbital_paisalah/others/TransactionCustom.dart';
 import 'TransactionCard.dart';
-import 'NewTransactionPage.dart';
+import '../screens/NewTransactionPage.dart';
 
 class RecentTransactionsCard extends StatelessWidget {
   final db = FirebaseDatabase.instance.ref();
