@@ -58,6 +58,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                         ))
                     .toList(),
               ),
+              SizedBox(height: 16.0),
               if (_transactionType == 'Expense')
                 DropdownButtonFormField<String>(
                   value: _category,
