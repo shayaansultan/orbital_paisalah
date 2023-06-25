@@ -42,7 +42,8 @@ class _LoginPageState extends State<LoginPage> {
         //   shadowColor: Colors.transparent,
         // ),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 160.0),
+          // padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 160.0),
+          padding: EdgeInsets.fromLTRB(30, 120, 30, 0),
           child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
             Title(
                 color: Colors.white,

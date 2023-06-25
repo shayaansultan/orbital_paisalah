@@ -3,13 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:orbital_paisalah/screens/CurrentBalanceCard.dart';
 import 'package:orbital_paisalah/screens/RecentTransactionsCard.dart';
 import 'package:orbital_paisalah/screens/starting_page.dart';
-// import 'package:orbital_paisalah/screens/transaction_item_tile.dart';
-// import 'login_page.dart';
-import 'income_expense_card.dart';
-// import 'SetBalancePage.dart';
-import 'NewTransactionPage.dart';
 import 'package:firebase_database/firebase_database.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -21,6 +15,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final db = FirebaseDatabase.instance.ref();
   User? user = FirebaseAuth.instance.currentUser;
+  final userEmail = FirebaseAuth.instance.currentUser!.email;
   double _balance = 0;
 
   @override
@@ -42,7 +37,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome!'),
+        automaticallyImplyLeading: false,
+        title: Text('$userEmail'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -61,8 +57,7 @@ class _MainPageState extends State<MainPage> {
         color: Color.fromARGB(255, 12, 23, 43),
         height: MediaQuery.of(context).size.height,
         child: Padding(
-          //padding: const EdgeInsets.all(16.0),
-          padding: const EdgeInsets.fromLTRB(16, 50, 16, 16),
+          padding: const EdgeInsets.fromLTRB(16, 32, 16, 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

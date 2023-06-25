@@ -19,7 +19,7 @@ class _CurrentBalanceCardState extends State<CurrentBalanceCard> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.all(10),
+      // margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Color.fromARGB(255, 21, 41, 76),

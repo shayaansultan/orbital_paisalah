@@ -108,10 +108,6 @@ class _RegisterPageState extends State<RegisterPage> {
                               password: _passwordController.text,
                             );
 
-                            // Add user to database
-                            newTransaction(0, false, 'Login');
-                            print('Dummy transaction added to database');
-
                             // User is signed up, navigate to main page
                             Navigator.pushReplacement(
                               context,
