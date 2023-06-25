@@ -21,13 +21,19 @@ Future<bool> setBalance(double balance) async {
 
 Future<bool> newTransaction(num amount, bool isExpense, String category) async {
   try {
+    final new_amount;
+    if (isExpense) {
+      new_amount = -amount;
+    } else {
+      new_amount = amount;
+    }
+
     final snapshot = await db.child('users/$userID/balance').get();
 
     final balance = snapshot.value;
 
-    final new_balance = balance != null
-        ? (balance as num) + (isExpense ? -amount : amount)
-        : amount;
+    final new_balance =
+        balance != null ? (balance as num) + (new_amount) : new_amount;
 
     await db.child('users/$userID').update({'balance': new_balance});
 
