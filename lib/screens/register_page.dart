@@ -16,6 +16,21 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
 
+  bool _isSuccess = false;
+  String _errorMessage = '';
+  bool _passwordMatch = false;
+
+  Future<String> signUp(email, password) async {
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      return 'Success';
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      return e.message!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
@@ -100,31 +115,51 @@ class _RegisterPageState extends State<RegisterPage> {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
-                          try {
-                            UserCredential userCredential = await FirebaseAuth
-                                .instance
-                                .createUserWithEmailAndPassword(
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                            );
-
-                            // User is signed up, navigate to main page
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MainPage()),
-                            );
-                          } on FirebaseAuthException catch (e) {
-                            if (e.code == 'weak-password') {
-                              print('The password provided is too weak.');
-                            } else if (e.code == 'email-already-in-use') {
-                              print(
-                                  'The account already exists for that email.');
-                            }
-                          } catch (e) {
-                            print(e);
+                          if (_passwordController.text !=
+                              _confirmPasswordController.text) {
+                            _showPasswordMatch();
+                            return;
                           }
+
+                          _errorMessage = await signUp(
+                              _emailController.text, _passwordController.text);
+                          if (_errorMessage == 'Success') {
+                            _isSuccess = true;
+                          } else {
+                            _isSuccess = false;
+                          }
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => MainPage()),
+                          // );
+                          _showDialog();
                         },
+
+                        //   try {
+                        //     // UserCredential userCredential = await FirebaseAuth
+                        //     //     .instance
+                        //     //     .createUserWithEmailAndPassword(
+                        //     //   email: _emailController.text,
+                        //     //   password: _passwordController.text,
+                        //     // );
+
+                        //     // User is signed up, navigate to main page
+                        //     Navigator.pushReplacement(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //           builder: (context) => MainPage()),
+                        //     );
+                        //   } on FirebaseAuthException catch (e) {
+                        //     if (e.code == 'weak-password') {
+                        //       print('The password provided is too weak.');
+                        //     } else if (e.code == 'email-already-in-use') {
+                        //       print(
+                        //           'The account already exists for that email.');
+                        //     }
+                        //   } catch (e) {
+                        //     print(e);
+                        //   }
+                        // },
                         child: const Text("Register"),
                       ),
                     ),
@@ -136,5 +171,54 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     ));
+  }
+
+  void _showPasswordMatch() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Passwords do not Match'),
+          content: Text('Password and Confirm Password do not match'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(_isSuccess ? 'Success' : 'Error'),
+          content: Text(_isSuccess
+              ? 'Sign up was successful.'
+              : 'Failed to sign up.\n\n$_errorMessage'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                if (_isSuccess) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainPage()),
+                  );
+                } else {
+                  Navigator.pop(context);
+                }
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
