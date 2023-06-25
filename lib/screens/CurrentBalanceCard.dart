@@ -26,7 +26,7 @@ class _CurrentBalanceCardState extends State<CurrentBalanceCard> {
         borderRadius: BorderRadius.circular(16.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withOpacity(0.8),
             blurRadius: 8.0,
             offset: Offset(0, 2),
           ),
