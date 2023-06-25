@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'database.dart';
+import '../others/database.dart';
 
 class NewTransactionPage extends StatefulWidget {
   @override
