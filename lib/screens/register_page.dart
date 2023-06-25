@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'main_page.dart';
+import 'database.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -105,6 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               email: _emailController.text,
                               password: _passwordController.text,
                             );
+
                             // User is signed up, navigate to main page
                             Navigator.pushReplacement(
                               context,
