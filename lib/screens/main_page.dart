@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:orbital_paisalah/screens/CurrentBalanceCard.dart';
+import 'package:orbital_paisalah/cards/CurrentBalanceCard.dart';
 import 'package:orbital_paisalah/screens/RecentTransactionsCard.dart';
 import 'package:orbital_paisalah/screens/starting_page.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -39,6 +39,7 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text('$userEmail'),
+        backgroundColor: Color.fromARGB(255, 21, 41, 76),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -57,7 +58,7 @@ class _MainPageState extends State<MainPage> {
         color: Color.fromARGB(255, 12, 23, 43),
         height: MediaQuery.of(context).size.height,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 32, 16, 16),
+          padding: const EdgeInsets.fromLTRB(16, 32, 16, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
