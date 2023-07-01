@@ -19,7 +19,8 @@ Future<bool> setBalance(double balance) async {
   }
 }
 
-Future<bool> newTransaction(num amount, bool isExpense, String category) async {
+Future<bool> newTransaction(num amount, bool isExpense, String category,
+    String note, DateTime dateTime) async {
   try {
     final new_amount;
     if (isExpense) {
@@ -41,7 +42,8 @@ Future<bool> newTransaction(num amount, bool isExpense, String category) async {
       'amount': amount,
       'type': isExpense ? 'expense' : 'income', // 'expense' or 'income
       'category': category,
-      'date': DateTime.now().millisecondsSinceEpoch,
+      'date': dateTime.millisecondsSinceEpoch,
+      'note': note,
     });
     print('Expense added');
     return true;
