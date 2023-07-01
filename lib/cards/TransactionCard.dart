@@ -19,32 +19,50 @@ class TransactionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        dense: false,
         tileColor: Color.fromARGB(255, 37, 68, 121),
         textColor: Colors.white,
+        // leading: Padding(
+        //   padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
+        //   child: Icon(
+        //     type == 'expense' ? Icons.arrow_downward : Icons.arrow_upward,
+        //     color: type == 'expense' ? Colors.red : Colors.green,
+        //   ),
+        // ),
 
         leading: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-          child: Icon(
-            type == 'expense' ? Icons.arrow_downward : Icons.arrow_upward,
-            color: type == 'expense' ? Colors.red : Colors.green,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+          child: Text('\$${amount.toStringAsFixed(2)}',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: type == 'expense' ? Colors.redAccent : Colors.green,
+              )),
         ),
+        title: Text(
+          category,
+          // style: const TextStyle(
+          //   fontSize: 20,
+          //   fontWeight: FontWeight.bold,
+          // ),
+        ),
+        subtitle: Text(
+            '${DateFormat.yMMMd().format(date)} ${DateFormat.jm().format(date)}'),
+        // trailing: Text('\$${amount.toStringAsFixed(2)}',
+        //     style: TextStyle(
+        //       fontSize: 20,
+        //       fontWeight: FontWeight.bold,
+        //       color: type == 'expense' ? Colors.redAccent : Colors.green,
+        //     )),
 
-        // leading: Text(
-        //   '\$${amount.toStringAsFixed(2)}',
-        //   style: TextStyle(
-        //     color: type == 'expense' ? Colors.red : Colors.green,
-        //     fontSize: 20,
-        //     fontWeight: FontWeight.bold,
-        //   ),
-        //   //align text in center vertically
-        //   textAlign: TextAlign.center,
-        // ),
-        title: Text(category),
-        subtitle: Text(DateFormat.yMMMd().format(date) +
-            ' ' +
-            DateFormat.jm().format(date)),
-        trailing: Text('\$${amount.toStringAsFixed(2)}'),
+        trailing: IconButton(
+          icon: const Icon(
+            Icons.edit,
+            color: Colors.white,
+          ),
+          onPressed: () {},
+        ),
+        minVerticalPadding: 10,
       ),
     );
   }
