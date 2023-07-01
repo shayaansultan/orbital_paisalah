@@ -53,7 +53,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                       transactionList.sort((a, b) => b.date.compareTo(a.date));
                       return ListView.builder(
                         shrinkWrap: true,
-                        // physics: const NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: transactionList.length,
                         itemBuilder: (context, index) {
                           final transaction = transactionList[index];

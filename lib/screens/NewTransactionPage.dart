@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../others/database.dart';
 
 class NewTransactionPage extends StatefulWidget {
@@ -12,12 +13,21 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
   String _category = 'Food';
   double _amount = 0.0;
   String _note = '';
+  DateTime _selectedDateTime = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New Transaction'),
+        title: const Text('New Transaction'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _saveTransaction;
+            },
+            icon: const Icon(Icons.save),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -28,7 +38,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
             children: [
               TextFormField(
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Amount',
                 ),
                 validator: (value) {
@@ -42,6 +52,21 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                 },
                 onSaved: (value) {
                   _amount = double.parse(value!);
+                },
+              ),
+              const SizedBox(height: 12.0),
+              TextFormField(
+                keyboardType: TextInputType.text,
+                autocorrect: true,
+                decoration: const InputDecoration(
+                  labelText: 'Note (optional)',
+                ),
+                onSaved: (value) {
+                  if (value == null || value.isEmpty) {
+                    _note = '';
+                  } else {
+                    _note = value;
+                  }
                 },
               ),
               const SizedBox(height: 16.0),
@@ -82,32 +107,43 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                           ))
                       .toList(),
                 ),
-              // const SizedBox(height: 16.0),
+              const Divider(color: Colors.transparent, height: 16.0),
               TextFormField(
-                keyboardType: TextInputType.text,
-                autocorrect: true,
-                decoration: const InputDecoration(
-                  labelText: 'Note (optional)',
+                readOnly: true,
+                controller: TextEditingController(
+                  text: DateFormat.yMd().add_jm().format(_selectedDateTime),
                 ),
-                // validator: (value) {
-                //   if (value == null || value.isEmpty) {
-                //     return 'Please enter an amount';
-                //   }
-                //   if (double.tryParse(value) == null) {
-                //     return 'Please enter a valid number';
-                //   }
-                //   return null;
-                // },
-                onSaved: (value) {
-                  if (value == null || value.isEmpty) {
-                    _note = '';
-                  } else {
-                    _note = value;
+                onTap: () async {
+                  final newDateTime = await showDatePicker(
+                    context: context,
+                    initialDate: _selectedDateTime,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  if (newDateTime != null) {
+                    final newTime = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.fromDateTime(_selectedDateTime),
+                    );
+                    if (newTime != null) {
+                      setState(() {
+                        _selectedDateTime = DateTime(
+                          newDateTime.year,
+                          newDateTime.month,
+                          newDateTime.day,
+                          newTime.hour,
+                          newTime.minute,
+                        );
+                      });
+                    }
                   }
                 },
+                decoration: InputDecoration(
+                  labelText: 'Date and Time',
+                ),
               ),
               const SizedBox(height: 16.0),
-              const SizedBox(height: 16.0),
+              // const SizedBox(height: 16.0),
               Align(
                 alignment: Alignment.center,
                 child: ElevatedButton(
@@ -131,7 +167,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
       }
 
       bool success = await newTransaction(
-          _amount, _transactionType == 'Expense', _category, _note);
+          _amount, _transactionType == 'Expense', _category, _note, _selectedDateTime);
       if (success) {
         showDialog(
           context: context,
