@@ -63,6 +63,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                             date: (DateTime.fromMillisecondsSinceEpoch(
                                 transaction.date)),
                             type: transaction.type,
+                            note: transaction.note,
                           );
                         },
                       );

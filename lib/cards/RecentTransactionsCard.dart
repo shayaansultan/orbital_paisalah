@@ -108,6 +108,7 @@ class RecentTransactionsCard extends StatelessWidget {
                             date: (DateTime.fromMillisecondsSinceEpoch(
                                 transaction.date)),
                             type: transaction.type,
+                            note: transaction.note,
                           );
                         },
                       );

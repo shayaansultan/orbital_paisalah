@@ -6,6 +6,7 @@ class TransactionCard extends StatelessWidget {
   final num amount;
   final DateTime date;
   final String type;
+  final String note;
 
   const TransactionCard({
     Key? key,
@@ -13,7 +14,31 @@ class TransactionCard extends StatelessWidget {
     required this.amount,
     required this.date,
     required this.type,
+    required this.note,
   }) : super(key: key);
+
+  List<Widget> description() {
+    if (note == '') {
+      return [
+        Text(category, style: const TextStyle(fontWeight: FontWeight.bold))
+      ];
+    } else {
+      return [
+        Padding(
+            padding: const EdgeInsets.only(bottom: 3),
+            child: Text(
+              category,
+              textAlign: TextAlign.left,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            )),
+        Padding(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Text(note,
+                textAlign: TextAlign.left,
+                style: const TextStyle(fontStyle: FontStyle.italic)))
+      ];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,39 +47,21 @@ class TransactionCard extends StatelessWidget {
         dense: false,
         tileColor: Color.fromARGB(255, 37, 68, 121),
         textColor: Colors.white,
-        // leading: Padding(
-        //   padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
-        //   child: Icon(
-        //     type == 'expense' ? Icons.arrow_downward : Icons.arrow_upward,
-        //     color: type == 'expense' ? Colors.red : Colors.green,
-        //   ),
-        // ),
-
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-          child: Text('\$${amount.toStringAsFixed(2)}',
+        leading: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text('\$${amount.toStringAsFixed(2)}',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: type == 'expense' ? Colors.redAccent : Colors.green,
               )),
-        ),
-        title: Text(
-          category,
-          // style: const TextStyle(
-          //   fontSize: 20,
-          //   fontWeight: FontWeight.bold,
-          // ),
+        ]),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: description(),
         ),
         subtitle: Text(
             '${DateFormat.yMMMd().format(date)} ${DateFormat.jm().format(date)}'),
-        // trailing: Text('\$${amount.toStringAsFixed(2)}',
-        //     style: TextStyle(
-        //       fontSize: 20,
-        //       fontWeight: FontWeight.bold,
-        //       color: type == 'expense' ? Colors.redAccent : Colors.green,
-        //     )),
-
         trailing: IconButton(
           icon: const Icon(
             Icons.edit,

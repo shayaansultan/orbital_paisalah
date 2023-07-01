@@ -4,6 +4,7 @@ class TransactionCustom {
   final String category;
   final int date;
   final String type;
+  final String note;
 
   TransactionCustom({
     required this.id,
@@ -11,6 +12,7 @@ class TransactionCustom {
     required this.category,
     required this.date,
     required this.type,
+    required this.note,
   });
 
   static TransactionCustom fromMap(String id, Map<String, dynamic> map) {
@@ -20,6 +22,7 @@ class TransactionCustom {
       category: map['category'],
       date: map['date'],
       type: map['type'],
+      note: map['note'],
     );
   }
 }

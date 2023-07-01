@@ -11,6 +11,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
   String _transactionType = 'Expense';
   String _category = 'Food';
   double _amount = 0.0;
+  String _note = '';
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                   _amount = double.parse(value!);
                 },
               ),
-              SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
               DropdownButtonFormField<String>(
                 value: _transactionType,
                 onChanged: (value) {
@@ -81,11 +82,39 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                           ))
                       .toList(),
                 ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: _saveTransaction,
-                child: Text('Save'),
+              // const SizedBox(height: 16.0),
+              TextFormField(
+                keyboardType: TextInputType.text,
+                autocorrect: true,
+                decoration: const InputDecoration(
+                  labelText: 'Note (optional)',
+                ),
+                // validator: (value) {
+                //   if (value == null || value.isEmpty) {
+                //     return 'Please enter an amount';
+                //   }
+                //   if (double.tryParse(value) == null) {
+                //     return 'Please enter a valid number';
+                //   }
+                //   return null;
+                // },
+                onSaved: (value) {
+                  if (value == null || value.isEmpty) {
+                    _note = '';
+                  } else {
+                    _note = value;
+                  }
+                },
               ),
+              const SizedBox(height: 16.0),
+              const SizedBox(height: 16.0),
+              Align(
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  onPressed: _saveTransaction,
+                  child: const Text('Save'),
+                ),
+              )
             ],
           ),
         ),
@@ -102,7 +131,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
       }
 
       bool success = await newTransaction(
-          _amount, _transactionType == 'Expense', _category);
+          _amount, _transactionType == 'Expense', _category, _note);
       if (success) {
         showDialog(
           context: context,
