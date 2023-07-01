@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:orbital_paisalah/cards/CurrentBalanceCard.dart';
+import 'package:orbital_paisalah/cards/PieChartCard.dart';
 import 'package:orbital_paisalah/cards/RecentTransactionsCard.dart';
 import 'package:orbital_paisalah/screens/starting_page.dart';
 
@@ -36,6 +37,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 12, 23, 43),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text('$userEmail'),
@@ -53,40 +55,13 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-          child: Container(
-        color: Color.fromARGB(255, 12, 23, 43),
-        height: MediaQuery.of(context).size.height,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 32, 16, 0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const CurrentBalanceCard(),
-              const SizedBox(
-                height: 30.0,
-              ),
-              RecentTransactionsCard()
-            ],
-          ),
-        ),
-      )),
+      body: ListView(padding: EdgeInsets.fromLTRB(16, 32, 16, 0), children: [
+        const CurrentBalanceCard(),
+        const SizedBox(height: 30.0),
+        RecentTransactionsCard(),
+        const SizedBox(height: 30.0),
+        const PieChartCard(), //NEW CARD ADDED
+      ]),
     );
   }
 }
-// backgroundColor: const Color.fromARGB(255, 24, 51, 81),
-// shadowColor: Colors.transparent,
-// title: Text("PaisaLah!", style: TextStyle(color: Colors.white)),
-// automaticallyImplyLeading: false,
-// actions: [
-//   IconButton(
-//     icon: const Icon(Icons.logout),
-//     onPressed: () async {
-//       await FirebaseAuth.instance.signOut();
-//       Navigator.pushReplacement(
-//         context,
-//         MaterialPageRoute(builder: (context) => StartingPage()),
-//       );
-//     },
-//   ),
-// ]
