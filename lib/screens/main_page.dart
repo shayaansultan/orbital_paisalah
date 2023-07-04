@@ -55,7 +55,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
-      body: ListView(padding: EdgeInsets.fromLTRB(16, 32, 16, 0), children: [
+      body: ListView(padding: EdgeInsets.fromLTRB(16, 32, 16, 32), children: [
         const CurrentBalanceCard(),
         const SizedBox(height: 30.0),
         RecentTransactionsCard(),
