@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 class PieChartCard extends StatefulWidget {
   const PieChartCard({Key? key}) : super(key: key);
+
 
   @override
   _PieChartCardState createState() => _PieChartCardState();
@@ -45,6 +47,36 @@ class _PieChartCardState extends State<PieChartCard> {
             ),
 
             //ADD PIE CHART STUFF HERE
+            PieChart(
+              dataMap: {
+                'Food': 10,
+                'Entertainment': 30,
+                'Shopping': 20,
+                'Transport':20,
+                'Housing':10,
+                'Investments/Saving':10,
+
+              },
+              chartType: ChartType.disc,
+              colorList: [Colors.green, Colors.blue, Colors.red, Colors.pinkAccent,
+                Colors.purple, Colors.brown],
+              animationDuration: Duration(milliseconds: 800),
+              chartRadius: MediaQuery.of(context).size.width / 2.7,
+              initialAngleInDegree: 0,
+              chartLegendSpacing: 32.0,
+              chartValuesOptions: ChartValuesOptions(
+                showChartValuesInPercentage: true,
+                showChartValuesOutside: true,
+                decimalPlaces: 1,
+              ),
+              centerText: 'Pie Chart',
+              legendOptions: LegendOptions(
+                showLegendsInRow: false,
+                legendPosition: LegendPosition.bottom,
+                showLegends: true,
+              ),
+            ),
+
           ],
         ),
       ),
