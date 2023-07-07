@@ -16,7 +16,7 @@ class _MainPageState extends State<MainPage> {
   final db = FirebaseDatabase.instance.ref();
   User? user = FirebaseAuth.instance.currentUser;
   final userEmail = FirebaseAuth.instance.currentUser!.email;
-  double _balance = 0;
+  num _balance = 0;
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ class _MainPageState extends State<MainPage> {
     db.child('users/${user!.uid}/balance').onValue.listen((event) {
       final balance = event.snapshot.value;
       setState(() {
-        _balance = balance != null ? balance as double : 0;
+        _balance = balance != null ? balance as num : 0;
       });
     });
   }

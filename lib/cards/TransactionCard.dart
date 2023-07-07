@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:orbital_paisalah/screens/UpdateTransactionPage.dart';
+import 'package:orbital_paisalah/others/TransactionCustom.dart';
 
 class TransactionCard extends StatelessWidget {
   final String category;
@@ -7,6 +9,7 @@ class TransactionCard extends StatelessWidget {
   final DateTime date;
   final String type;
   final String note;
+  final String id;
 
   const TransactionCard({
     Key? key,
@@ -15,6 +18,7 @@ class TransactionCard extends StatelessWidget {
     required this.date,
     required this.type,
     required this.note,
+    required this.id,
   }) : super(key: key);
 
   List<Widget> description() {
@@ -67,7 +71,20 @@ class TransactionCard extends StatelessWidget {
             Icons.edit,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => UpdateTransactionPage(
+                            transaction: TransactionCustom(
+                          id: id,
+                          amount: amount,
+                          category: category,
+                          date: date.millisecondsSinceEpoch,
+                          type: type,
+                          note: note,
+                        ))));
+          },
         ),
         minVerticalPadding: 10,
       ),

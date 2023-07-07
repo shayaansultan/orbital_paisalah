@@ -109,6 +109,7 @@ class RecentTransactionsCard extends StatelessWidget {
                                 transaction.date)),
                             type: transaction.type,
                             note: transaction.note,
+                            id: transaction.id,
                           );
                         },
                       );

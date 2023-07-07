@@ -13,33 +13,67 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
   String _category = 'Food';
   double _amount = 0.0;
   String _note = '';
-  DateTime _selectedDateTime = DateTime.now();
+  DateTime _dateTime = DateTime.now();
+  bool _isExpense = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('New Transaction'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              _saveTransaction;
-            },
-            icon: const Icon(Icons.save),
-          ),
-        ],
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+          child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Transaction Type
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: RadioListTile<bool>(
+                      title: const Text('Expense'),
+                      value: true,
+                      groupValue: _isExpense,
+                      onChanged: (value) {
+                        setState(() {
+                          _transactionType = 'expense';
+                          _isExpense = true;
+                        });
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: RadioListTile<bool>(
+                      title: const Text('Income'),
+                      value: false,
+                      groupValue: _isExpense,
+                      onChanged: (value) {
+                        setState(() {
+                          _transactionType == 'income';
+                          _isExpense = false;
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+
+              const Divider(
+                height: 10,
+                thickness: 1,
+                color: Color(0xFFBDBDBD),
+              ),
+
+              //Amount
               TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   labelText: 'Amount',
+                  prefixIcon: Icon(Icons.attach_money),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -55,11 +89,14 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                 },
               ),
               const SizedBox(height: 12.0),
+
+              //Note
               TextFormField(
                 keyboardType: TextInputType.text,
                 autocorrect: true,
                 decoration: const InputDecoration(
-                  labelText: 'Note (optional)',
+                  labelText: 'Note (Optional)',
+                  prefixIcon: Icon(Icons.note),
                 ),
                 onSaved: (value) {
                   if (value == null || value.isEmpty) {
@@ -70,80 +107,74 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
                 },
               ),
               const SizedBox(height: 16.0),
-              DropdownButtonFormField<String>(
-                value: _transactionType,
-                onChanged: (value) {
-                  setState(() {
-                    _transactionType = value!;
-                  });
-                },
-                items: ['Expense', 'Income']
-                    .map((type) => DropdownMenuItem(
-                          value: type,
-                          child: Text(type),
-                        ))
-                    .toList(),
-              ),
-              SizedBox(height: 16.0),
-              if (_transactionType == 'Expense')
+
+              // Category
+              if (_isExpense)
                 DropdownButtonFormField<String>(
-                  value: _category,
-                  onChanged: (value) {
-                    setState(() {
-                      _category = value!;
-                    });
-                  },
-                  items: [
-                    'Food',
-                    'Entertainment',
-                    'Shopping',
-                    'Transport',
-                    'Housing',
-                    'Investments/Saving'
-                  ]
-                      .map((category) => DropdownMenuItem(
-                            value: category,
-                            child: Text(category),
-                          ))
-                      .toList(),
-                ),
-              const Divider(color: Colors.transparent, height: 16.0),
-              TextFormField(
-                readOnly: true,
-                controller: TextEditingController(
-                  text: DateFormat.yMd().add_jm().format(_selectedDateTime),
-                ),
-                onTap: () async {
-                  final newDateTime = await showDatePicker(
-                    context: context,
-                    initialDate: _selectedDateTime,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                  );
-                  if (newDateTime != null) {
-                    final newTime = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.fromDateTime(_selectedDateTime),
-                    );
-                    if (newTime != null) {
+                    value: _category,
+                    onChanged: (value) {
                       setState(() {
-                        _selectedDateTime = DateTime(
-                          newDateTime.year,
-                          newDateTime.month,
-                          newDateTime.day,
-                          newTime.hour,
-                          newTime.minute,
-                        );
+                        _category = value!;
                       });
-                    }
-                  }
-                },
-                decoration: InputDecoration(
-                  labelText: 'Date and Time',
-                ),
+                    },
+                    items: [
+                      'Food',
+                      'Entertainment',
+                      'Shopping',
+                      'Transport',
+                      'Housing',
+                      'Investments/Saving',
+                      'Other',
+                    ]
+                        .map((category) => DropdownMenuItem(
+                              value: category,
+                              child: Text(category),
+                            ))
+                        .toList(),
+                    decoration: const InputDecoration(
+                      labelText: 'Category',
+                      prefixIcon: Icon(Icons.category),
+                    )),
+              const Divider(color: Colors.transparent, height: 16.0),
+
+              //Date and Time
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        _selectDate(context);
+                      },
+                      child: InputDecorator(
+                        decoration: const InputDecoration(
+                          labelText: 'Date',
+                          prefixIcon: Icon(Icons.calendar_today),
+                        ),
+                        child: Text(DateFormat.yMd().format(_dateTime)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16.0),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        _selectTime(context);
+                      },
+                      child: InputDecorator(
+                        decoration: const InputDecoration(
+                          labelText: 'Time',
+                          prefixIcon: Icon(Icons.access_time),
+                        ),
+                        child: Text(DateFormat.Hm().format(_dateTime)),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 16.0),
-              // const SizedBox(height: 16.0),
+
+              const Divider(color: Colors.transparent, height: 16.0),
+
+              // Save Button
               Align(
                 alignment: Alignment.center,
                 child: ElevatedButton(
@@ -154,7 +185,7 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
             ],
           ),
         ),
-      ),
+      )),
     );
   }
 
@@ -162,12 +193,12 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      if (_transactionType == 'Income') {
+      if (_transactionType == 'income') {
         _category = 'Income';
       }
 
       bool success = await newTransaction(
-          _amount, _transactionType == 'Expense', _category, _note, _selectedDateTime);
+          _amount, _isExpense, _category, _note, _dateTime);
       if (success) {
         showDialog(
           context: context,
@@ -202,6 +233,38 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
           ),
         );
       }
+    }
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _dateTime,
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && picked != _dateTime) {
+      setState(() {
+        _dateTime = picked;
+      });
+    }
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(_dateTime),
+    );
+    if (picked != null) {
+      setState(() {
+        _dateTime = DateTime(
+          _dateTime.year,
+          _dateTime.month,
+          _dateTime.day,
+          picked.hour,
+          picked.minute,
+        );
+      });
     }
   }
 }
