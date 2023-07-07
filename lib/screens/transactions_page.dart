@@ -64,6 +64,7 @@ class _TransactionsPageState extends State<TransactionsPage> {
                                 transaction.date)),
                             type: transaction.type,
                             note: transaction.note,
+                            id: transaction.id,
                           );
                         },
                       );
