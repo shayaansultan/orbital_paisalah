@@ -4,9 +4,14 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:orbital_paisalah/cards/CurrentBalanceCard.dart';
 import 'package:orbital_paisalah/cards/RecentTransactionsCard.dart';
 import 'package:orbital_paisalah/screens/starting_page.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
+  String messageTitle = "Empty";
+  String notificationAlert = "alert";
+
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -22,6 +27,22 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     _activateListeners();
+    _firebaseMessaging.configure(
+      onMessage: (message) async{
+        setState(() {
+          messageTitle = message["notification"]["title"];
+          notificationAlert = "New Notification Alert";
+        });
+
+      },
+      onResume: (message) async{
+        setState(() {
+          messageTitle = message["data"]["title"];
+          notificationAlert = "Application opened from Notification";
+        });
+
+      },
+    );
   }
 
   void _activateListeners() {
@@ -53,6 +74,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
+<<<<<<< Updated upstream
       body: SingleChildScrollView(
           child: Container(
         color: Color.fromARGB(255, 12, 23, 43),
@@ -71,6 +93,29 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
       )),
+=======
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              notificationAlert,
+            ),
+            Text(
+              messageTitle,
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ],
+        ),
+      ),
+      body: ListView(padding: EdgeInsets.fromLTRB(16, 32, 16, 0), children: [
+        const CurrentBalanceCard(),
+        const SizedBox(height: 30.0),
+        RecentTransactionsCard(),
+        const SizedBox(height: 30.0),
+        const PieChartCard(), //NEW CARD ADDED
+      ]),
+>>>>>>> Stashed changes
     );
   }
 }

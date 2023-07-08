@@ -161,6 +161,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.3+3"
+  firebase_messaging:
+    dependency: "direct main"
+    description:
+      name: firebase_messaging
+      sha256: bccdd12ad789befe29c5c6415fb5eee188f5a70dddb97d70ea6db25cf0ee92d6
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.1.8"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -248,6 +256,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.2"
+  platform:
+    dependency: transitive
+    description:
+      name: platform
+      sha256: "2d03e4330ae22fc7fc0dd38c1fc6d0a9dc7ff10d7deea6dbb2583f7e5c053453"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.1"
   plugin_platform_interface:
     dependency: transitive
     description:
