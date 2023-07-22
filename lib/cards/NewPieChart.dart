@@ -40,7 +40,7 @@ class _NewPieChart extends State<NewPieChart> {
             const Text(
               'Categorical Spending',
               style: TextStyle(
-                fontSize: 18.0,
+                fontSize: 20.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue,
               ),
@@ -91,6 +91,27 @@ class _NewPieChart extends State<NewPieChart> {
                     });
                     return PieChart(
                       dataMap: expenseMap,
+                      colorList: const [
+                        Colors.green,
+                        Colors.blue,
+                        Colors.red,
+                        Colors.pinkAccent,
+                        Colors.purple,
+                        Colors.brown
+                      ],
+                      chartType: ChartType.disc,
+                      // chartRadius: MediaQuery.of(context).size.width / 2.7,
+                      animationDuration: const Duration(milliseconds: 800),
+                      legendOptions: const LegendOptions(
+                        legendTextStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.0,
+                        ),
+                      ),
+                      chartValuesOptions: const ChartValuesOptions(
+                        showChartValuesInPercentage: true,
+                        decimalPlaces: 1,
+                      ),
                     );
                   }
                 } else {
