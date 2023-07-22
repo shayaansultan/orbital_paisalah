@@ -5,6 +5,7 @@ import 'package:orbital_paisalah/cards/CurrentBalanceCard.dart';
 import 'package:orbital_paisalah/cards/PieChartCard.dart';
 import 'package:orbital_paisalah/cards/RecentTransactionsCard.dart';
 import 'package:orbital_paisalah/screens/starting_page.dart';
+import 'package:orbital_paisalah/cards/NewPieChart.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -60,7 +61,8 @@ class _MainPageState extends State<MainPage> {
         const SizedBox(height: 30.0),
         RecentTransactionsCard(),
         const SizedBox(height: 30.0),
-        const PieChartCard(), //NEW CARD ADDED
+        // const PieChartCard(), //NEW CARD ADDED
+        NewPieChart(),
       ]),
     );
   }
