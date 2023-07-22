@@ -56,7 +56,9 @@ class TransactionCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: type == 'expense' ? Colors.redAccent : Colors.green,
+                color: type == 'expense'
+                    ? Colors.redAccent
+                    : Colors.lightGreenAccent,
               )),
         ]),
         title: Column(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'database.dart';
 import '../screens/SetBalancePage.dart';
 
 class CurrentBalanceCard extends StatefulWidget {
@@ -40,7 +39,7 @@ class _CurrentBalanceCardState extends State<CurrentBalanceCard> {
             Text(
               'Current Balance',
               style: TextStyle(
-                fontSize: 18.0,
+                fontSize: 20.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue,
               ),
