@@ -178,3 +178,32 @@ Future<void> budgetChecker() async {
     print('Error: $e');
   }
 }
+
+Future<void> reminderChecker() async {
+  try {
+    final today = DateTime.now();
+    final todayStart = DateTime(today.year, today.month, today.day);
+    final todayEnd = DateTime(today.year, today.month, today.day + 1);
+
+    final reminders = await db.child('users/${user!.uid}/reminder').get();
+
+    final reminderList = reminders.value;
+
+    if (reminderList != null) {
+      final newMap = reminderList as Map<dynamic, dynamic>;
+
+      newMap.forEach((key, value) {
+        final innerMap = Map.from(value);
+        final date = innerMap['date'] as int;
+        final note = innerMap['note'] as String;
+
+        if (date >= todayStart.millisecondsSinceEpoch &&
+            date < todayEnd.millisecondsSinceEpoch) {
+          BalanceNotifier.showReminderNotification(note);
+        }
+      });
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}

@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:orbital_paisalah/cards/CurrentBalanceCard.dart';
 import 'package:orbital_paisalah/cards/RecentTransactionsCard.dart';
-import 'package:orbital_paisalah/others/ReminderNotifier.dart';
+import 'package:orbital_paisalah/others/database.dart';
 import 'package:orbital_paisalah/screens/SetReminderPage.dart';
 import 'package:orbital_paisalah/screens/starting_page.dart';
 import 'package:orbital_paisalah/cards/NewPieChart.dart';
@@ -27,7 +27,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     _activateListeners();
-    _showReminderNotification('test');
+    _showReminderNotification();
   }
 
   void _activateListeners() {
@@ -39,14 +39,9 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  // Future<void> _showBalanceNotification(double balanceThreshold) async {
-  //   await BalanceNotifier.initNotifications();
-  //   await BalanceNotifier.showBalanceNotification(balanceThreshold);
-  // }
-
-  Future<void> _showReminderNotification(String note) async {
-    await ReminderNotifier.initNotifications();
-    await ReminderNotifier.checkReminders();
+  Future<void> _showReminderNotification() async {
+    await BalanceNotifier.initNotifications();
+    await reminderChecker();
   }
 
   @override

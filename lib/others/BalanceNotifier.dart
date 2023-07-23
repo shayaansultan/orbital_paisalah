@@ -33,8 +33,28 @@ class BalanceNotifier {
     final NotificationDetails platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics);
 
-    await _flutterLocalNotificationsPlugin.show(0, 'Low Balance',
+    await _flutterLocalNotificationsPlugin.show(0, 'Budget Exceeded',
         'You have exceeded $timeFrame budget', platformChannelSpecifics,
+        payload: 'balance_notification');
+  }
+
+  static Future<void> showReminderNotification(String note) async {
+    final AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+            'reminder_notification_channel', 'Reminder Notifications',
+            channelDescription: 'Notifications for reminders',
+            importance: Importance.max,
+            priority: Priority.high,
+            ticker: 'ticker',
+            playSound: true,
+            enableVibration: true,
+            icon: 'app_icon');
+
+    final NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await _flutterLocalNotificationsPlugin.show(0, 'Reminder',
+        'Reminder for $note', platformChannelSpecifics,
         payload: 'balance_notification');
   }
 }
