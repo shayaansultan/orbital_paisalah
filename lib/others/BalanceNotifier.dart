@@ -18,7 +18,7 @@ class BalanceNotifier {
     );
   }
 
-  static Future<void> showBalanceNotification(double balanceThreshold) async {
+  static Future<void> showBalanceNotification(String timeFrame) async {
     final AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
             'balance_notification_channel', 'Balance Notifications',
@@ -34,7 +34,7 @@ class BalanceNotifier {
         NotificationDetails(android: androidPlatformChannelSpecifics);
 
     await _flutterLocalNotificationsPlugin.show(0, 'Low Balance',
-        'Your balance is less than $balanceThreshold', platformChannelSpecifics,
+        'You have exceeded $timeFrame budget', platformChannelSpecifics,
         payload: 'balance_notification');
   }
 }

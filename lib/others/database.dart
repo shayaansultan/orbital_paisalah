@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'BalanceNotifier.dart';
 
 final db = FirebaseDatabase.instance.ref();
 final user = FirebaseAuth.instance.currentUser;
@@ -95,5 +96,85 @@ Future<bool> updateTransaction(String id, num amount, bool isExpense,
   } catch (e) {
     print('Error: $e');
     return false;
+  }
+}
+
+Future<void> budgetChecker() async {
+  try {
+    final dailySnap = await db.child('users/$userID/budget/daily').get();
+    final dailyBudget = dailySnap.value as num;
+    final weeklySnap = await db.child('users/$userID/budget/weekly').get();
+    final weeklyBudget = weeklySnap.value as num;
+    final monthlySnap = await db.child('users/$userID/budget/monthly').get();
+    final monthlyBudget = monthlySnap.value as num;
+
+    //write code for getting the millseconds from epoch for today, this week and this month
+    final today = DateTime.now();
+    final todayStart = DateTime(today.year, today.month, today.day);
+    final todayEnd = DateTime(today.year, today.month, today.day + 1);
+
+    final weekStart = today.subtract(Duration(days: today.weekday - 1));
+    final weekEnd =
+        today.add(Duration(days: DateTime.daysPerWeek - today.weekday));
+
+    final monthStart = DateTime(today.year, today.month, 1);
+    final monthEnd = DateTime(today.year, today.month + 1, 1);
+
+    //getting the total expense for today, this week and this month
+    final transactions =
+        await db.child('users/${user!.uid}/transactions').get();
+    final transactionList = transactions.value;
+    final newMap = transactionList as Map<dynamic, dynamic>;
+    Map<String, double> budgetMap = {
+      'daily': 0.0,
+      'weekly': 0.0,
+      'monthly': 0.0,
+    };
+
+    //filter newMap for transactions that are within today, this week and this month
+    newMap.forEach((key, value) {
+      final innerMap = Map.from(value);
+      final amount = innerMap['amount'].toDouble();
+      final date = innerMap['date'] as int;
+      final type = innerMap['type'] as String;
+
+      if (type == 'expense') {
+        if (date >= todayStart.millisecondsSinceEpoch &&
+            date < todayEnd.millisecondsSinceEpoch) {
+          budgetMap['daily'] = budgetMap['daily']! + amount;
+        }
+
+        if (date >= weekStart.millisecondsSinceEpoch &&
+            date < weekEnd.millisecondsSinceEpoch) {
+          budgetMap['weekly'] = budgetMap['weekly']! + amount;
+        }
+
+        if (date >= monthStart.millisecondsSinceEpoch &&
+            date < monthEnd.millisecondsSinceEpoch) {
+          budgetMap['monthly'] = budgetMap['monthly']! + amount;
+        }
+      }
+    });
+
+    //check if the budget is exceeded, and if yes, send a notification
+    final todayExpense = budgetMap['daily']!;
+    final weekExpense = budgetMap['weekly']!;
+    final monthExpense = budgetMap['monthly']!;
+
+    if (todayExpense > dailyBudget) {
+      //send notification
+      BalanceNotifier.showBalanceNotification('daily');
+    }
+
+    if (weekExpense > weeklyBudget) {
+      //send notification
+      BalanceNotifier.showBalanceNotification('weekly');
+    }
+
+    if (monthExpense > monthlyBudget) {
+      BalanceNotifier.showBalanceNotification('monthly');
+    }
+  } catch (e) {
+    print('Error: $e');
   }
 }

@@ -203,8 +203,9 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
       bool success = await newTransaction(
           _amount, _isExpense, _category, _note, _dateTime);
       if (success) {
-        await BalanceNotifier.initNotifications();
-        await BalanceNotifier.showBalanceNotification(100);
+        // await BalanceNotifier.initNotifications();
+        // await BalanceNotifier.showBalanceNotification(100);
+        await budgetChecker();
 
         showDialog(
           context: context,
