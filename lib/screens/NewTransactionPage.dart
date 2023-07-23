@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../others/database.dart';
+import 'package:orbital_paisalah/others/BalanceNotifier.dart';
 
 class NewTransactionPage extends StatefulWidget {
   @override
@@ -202,6 +203,9 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
       bool success = await newTransaction(
           _amount, _isExpense, _category, _note, _dateTime);
       if (success) {
+        await BalanceNotifier.initNotifications();
+        await BalanceNotifier.showBalanceNotification(100);
+
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
