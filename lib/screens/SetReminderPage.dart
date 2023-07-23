@@ -86,6 +86,16 @@ class _SetReminderPageState extends State<SetReminderPage> {
                 ),
               ],
             ),
+            SizedBox(height: 32.0),
+            Text(
+              'A reminder will be sent next time you open the app on the selected date.',
+              style: TextStyle(
+                  // color: Colors.grey,
+                  fontSize: 14.0,
+                  fontStyle: FontStyle.italic,
+                  letterSpacing: 1.0),
+              textAlign: TextAlign.center,
+            ),
             SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: _updateReminder,
