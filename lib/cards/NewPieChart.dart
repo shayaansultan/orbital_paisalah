@@ -89,30 +89,44 @@ class _NewPieChart extends State<NewPieChart> {
                         }
                       }
                     });
-                    return PieChart(
-                      dataMap: expenseMap,
-                      colorList: const [
-                        Colors.green,
-                        Colors.blue,
-                        Colors.red,
-                        Colors.pinkAccent,
-                        Colors.purple,
-                        Colors.brown
-                      ],
-                      chartType: ChartType.disc,
-                      // chartRadius: MediaQuery.of(context).size.width / 2.7,
-                      animationDuration: const Duration(milliseconds: 800),
-                      legendOptions: const LegendOptions(
-                        legendTextStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14.0,
+
+                    if (expenseMap.isEmpty) {
+                      return Container(
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'No Expenses Available',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ));
+                    } else {
+                      return PieChart(
+                        dataMap: expenseMap,
+                        colorList: const [
+                          Colors.green,
+                          Colors.blue,
+                          Colors.red,
+                          Colors.pinkAccent,
+                          Colors.purple,
+                          Colors.brown
+                        ],
+                        chartType: ChartType.disc,
+                        // chartRadius: MediaQuery.of(context).size.width / 2.7,
+                        animationDuration: const Duration(milliseconds: 800),
+                        legendOptions: const LegendOptions(
+                          legendTextStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.0,
+                          ),
                         ),
-                      ),
-                      chartValuesOptions: const ChartValuesOptions(
-                        showChartValuesInPercentage: true,
-                        decimalPlaces: 1,
-                      ),
-                    );
+                        chartValuesOptions: const ChartValuesOptions(
+                          showChartValuesInPercentage: true,
+                          decimalPlaces: 1,
+                        ),
+                      );
+                    }
                   }
                 } else {
                   return CircularProgressIndicator();

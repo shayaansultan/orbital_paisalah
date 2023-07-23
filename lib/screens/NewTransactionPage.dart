@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../others/database.dart';
+import 'package:orbital_paisalah/others/BalanceNotifier.dart';
 
 class NewTransactionPage extends StatefulWidget {
   @override
@@ -193,13 +194,19 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      if (_transactionType == 'income') {
+      if (_transactionType == 'income' ||
+          _transactionType == 'Income' ||
+          _isExpense == false) {
         _category = 'Income';
       }
 
       bool success = await newTransaction(
           _amount, _isExpense, _category, _note, _dateTime);
       if (success) {
+        // await BalanceNotifier.initNotifications();
+        // await BalanceNotifier.showBalanceNotification(100);
+        await budgetChecker();
+
         showDialog(
           context: context,
           builder: (context) => AlertDialog(

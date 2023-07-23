@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:orbital_paisalah/cards/CurrentBalanceCard.dart';
-import 'package:orbital_paisalah/cards/PieChartCard.dart';
 import 'package:orbital_paisalah/cards/RecentTransactionsCard.dart';
+import 'package:orbital_paisalah/others/database.dart';
+import 'package:orbital_paisalah/screens/SetReminderPage.dart';
 import 'package:orbital_paisalah/screens/starting_page.dart';
 import 'package:orbital_paisalah/cards/NewPieChart.dart';
+import 'package:orbital_paisalah/others/BalanceNotifier.dart';
+import 'package:orbital_paisalah/screens/SetBudgetPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -24,6 +27,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     _activateListeners();
+    _showReminderNotification();
   }
 
   void _activateListeners() {
@@ -33,6 +37,11 @@ class _MainPageState extends State<MainPage> {
         _balance = balance != null ? balance as num : 0;
       });
     });
+  }
+
+  Future<void> _showReminderNotification() async {
+    await BalanceNotifier.initNotifications();
+    await reminderChecker();
   }
 
   @override
@@ -56,7 +65,39 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
-      body: ListView(padding: EdgeInsets.fromLTRB(16, 32, 16, 32), children: [
+      body: ListView(padding: EdgeInsets.fromLTRB(16, 16, 16, 32), children: [
+        // ElevatedButton(
+        //     onPressed: () async {
+        //       await BalanceNotifier.initNotifications();
+        //       await BalanceNotifier.showBalanceNotification(100);
+        //     },
+        //     child: Text('Check Balance')),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                // go to set budget page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SetBudgetPage()),
+                );
+              },
+              child: Text('Set Budget'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SetReminderPage()),
+                );
+              },
+              child: Text('Set Reminder'),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16.0),
         const CurrentBalanceCard(),
         const SizedBox(height: 30.0),
         RecentTransactionsCard(),

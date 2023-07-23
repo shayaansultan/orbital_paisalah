@@ -77,6 +77,10 @@ class _UpdateTransactionPageState extends State<UpdateTransactionPage> {
       final dateTime = _dateTime;
       final id = widget.transaction.id;
 
+      if (!_isExpense) {
+        _category = 'Income';
+      }
+
       final result = await updateTransaction(
         id,
         amount,
