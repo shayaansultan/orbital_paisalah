@@ -113,9 +113,13 @@ Future<void> budgetChecker() async {
     final todayStart = DateTime(today.year, today.month, today.day);
     final todayEnd = DateTime(today.year, today.month, today.day + 1);
 
-    final weekStart = today.subtract(Duration(days: today.weekday - 1));
-    final weekEnd =
-        today.add(Duration(days: DateTime.daysPerWeek - today.weekday));
+    // final weekStart = today.subtract(Duration(days: today.weekday - 1));
+    // final weekEnd =
+    //     today.add(Duration(days: DateTime.daysPerWeek - today.weekday));
+
+    final day = today.weekday;
+    final weekStart = DateTime(today.year, today.month, today.day - day + 1);
+    final weekEnd = DateTime(today.year, today.month, today.day - day + 8);
 
     final monthStart = DateTime(today.year, today.month, 1);
     final monthEnd = DateTime(today.year, today.month + 1, 1);
