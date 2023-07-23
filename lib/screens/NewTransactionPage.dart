@@ -193,7 +193,9 @@ class _NewTransactionPageState extends State<NewTransactionPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      if (_transactionType == 'income') {
+      if (_transactionType == 'income' ||
+          _transactionType == 'Income' ||
+          _isExpense == false) {
         _category = 'Income';
       }
 
